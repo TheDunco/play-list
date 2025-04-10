@@ -1,2 +1,11 @@
 # play-list
-An API to manage playlists and queues in specific and detailed ways. I want to be able to do things "Add playlist to the end of the queue shuffled:" features that aren't normally available.
+
+An API to manage playlists and queues in specific and detailed ways. 
+
+I want to be able to do things like 
+  - adding a shuffled playlist to the end of the queue
+  - reshuffle the queue
+  - reorder playlists within the queue (shuffled or otherwise)
+  - convert the current queue to a playlist
+
+These features aren't normally available in music players and I want them to be.
