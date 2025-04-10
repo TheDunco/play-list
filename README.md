@@ -7,5 +7,7 @@ I want to be able to do things like
   - reshuffle the queue
   - reorder playlists within the queue (shuffled or otherwise)
   - convert the current queue to a playlist
+  - multiple queues
+  - and two playlists to queue interleaved
 
 These features aren't normally available in music players and I want them to be.
