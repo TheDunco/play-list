@@ -11,3 +11,15 @@ I want to be able to do things like
   - and two playlists to queue interleaved
 
 These features aren't normally available in music players and I want them to be.
+
+## Dev vision
+
+PNPM workspace with structure
+
+- workspace
+  - packages
+    - api
+    - types
+  - apps
+    - cli
+    - web
