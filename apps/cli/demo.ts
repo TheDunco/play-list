@@ -11,21 +11,21 @@ const exampleSong1: Song = {
     name: "S1: TestSong",
     artist: "Dunco",
     lengthMilliseconds: ONE_MINUTE_MS
-};
+} as const;
 
 const exampleSong2: Song = {
     _typename: 'song',
     name: "S2: SongTest",
     artist: "Dunco",
     lengthMilliseconds: ONE_MINUTE_MS * 2
-};
+} as const;
 
 const exampleSong3: Song = {
     _typename: 'song',
     name: "S3: SingSong",
     artist: "Dunco",
     lengthMilliseconds: ONE_MINUTE_MS * 3
-};
+} as const;
 
 
 const examplePlaylist: Playlist = {
@@ -36,7 +36,7 @@ const examplePlaylist: Playlist = {
         exampleSong2,
         exampleSong3
     ]
-}
+} as const;
 
 const lineBreak = () => console.log("\n");
 const divider = () => console.log(chalk.green("==============="));
@@ -66,18 +66,12 @@ await program.action(async () => {
     info("Initial queue")
     logQ();
 
-    await sleep(ONE_SECOND_MS);
-
     info("Enqueuing a couple more songs...");
     queue.enqueueSong(exampleSong2);
     queue.enqueueSong(exampleSong3);
     logQ();
 
-    await sleep(ONE_SECOND_MS);
-
     nextSong();
-
-    await sleep(ONE_SECOND_MS);
 
     info("Shuffling queue...");
     for (let i = 1; i < SHUFFLE_COUNT + 1; i++) {
@@ -87,22 +81,17 @@ await program.action(async () => {
         await sleep(ONE_SECOND_MS);
     }
 
-    await sleep(ONE_SECOND_MS);
-
     info("Adding playlist to queue");
     queue.enqueuePlaylist(examplePlaylist);
     logQ();
-
-    await sleep(ONE_SECOND_MS * 5);
 
     info("Shuffling queue with playlist...");
     for (let i = 1; i < SHUFFLE_COUNT + 1; i++) {
         info(i);
         queue.shuffle();
         logQ();
+        await sleep(ONE_SECOND_MS);
     }
-
-    await sleep(ONE_SECOND_MS);
 
     nextSong();
 
