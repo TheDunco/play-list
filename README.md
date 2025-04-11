@@ -3,12 +3,17 @@
 An API to manage playlists and queues in specific and detailed ways. 
 
 I want to be able to do things like 
-  - adding a shuffled playlist to the end of the queue
+  - add a shuffled playlist to the end of the queue
   - reshuffle the queue
-  - reorder playlists within the queue (shuffled or otherwise)
+    - keeping playlists intact
+    - deep shuffling playlists and their position
+  - reorder playlists within the queue
   - convert the current queue to a playlist
+  - saved queues
   - multiple queues
-  - and two playlists to queue interleaved
+  - repeating queues
+  - add two playlists to queue interleaved
+  - shuffle queue on repeat
 
 These features aren't normally available in music players and I want them to be.
 
