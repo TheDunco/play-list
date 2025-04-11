@@ -22,4 +22,5 @@ PNPM workspace with structure
     - types
   - apps
     - cli
+    - server
     - web
