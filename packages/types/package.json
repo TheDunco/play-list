@@ -1,17 +1,17 @@
 {
-    "name": "@play-list/types",
-    "version": "1.0.0",
-    "description": "Types package for play-list",
-    "exports": {
-        "import": {
-            "types": "./index.ts",
-            "default": "./index.ts"
-        }
-    },
-    "main": "index.ts",
-    "module": "index.ts",
-    "types": "index.ts",
-    "dependencies": {
-        "typescript": "^5.8.3"
-    }
+  "name": "@play-list/types",
+  "version": "1.0.0",
+  "description": "Types package for play-list",
+  "exports": {
+      "import": {
+          "types": "./index.ts",
+          "default": "./index.ts"
+      }
+  },
+  "main": "index.ts",
+  "module": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+      "typescript": "^5.8.3"
+  }
 }

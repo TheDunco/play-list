@@ -1,15 +1,19 @@
 {
-  "name": "cli",
+  "name": "@play-list/cli",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run-ts": "bun run $@",
+    "demo": "bun run demo.ts"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "@TheDunco",
   "dependencies": {
-    "bun": "^1.2.9"
+    "@play-list/api": "workspace:*",
+    "@play-list/types": "workspace:*",
+    "bun": "^1.2.9",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0"
   }
 }

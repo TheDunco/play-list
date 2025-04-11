@@ -1,0 +1,16 @@
+{
+  "name": "@play-list/api",
+  "version": "1.0.0",
+  "description": "The API and behavioral specs",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "@TheDunco",
+  "dependencies": {
+      "@play-list/types": "workspace:*",
+      "typescript": "^5.8.3"
+  }
+
+}
