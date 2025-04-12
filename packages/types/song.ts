@@ -1,8 +1,13 @@
-export interface Song {
-    _typename: 'song';
-    id: string;
-    name: string;
-    artist: string;
-    year: number;
-    lengthMilliseconds: number;
-};
+import { InferInput, literal, object, string } from "valibot";
+import { minLengthString, minValueNumber } from "./utils";
+
+export const songSchema = object({
+    _typename: literal('song'),
+    id: string(),
+    name: minLengthString,
+    artist: minLengthString,
+    year: minValueNumber,
+    lengthMilliseconds: minValueNumber
+})
+
+export type Song = InferInput<typeof songSchema>;

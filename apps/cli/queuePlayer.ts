@@ -16,7 +16,7 @@ export class QueuePlayer {
         while (this._playing) {
             const currentSong = this._queue.getCurrentSong();
             this._elapsedTime = 0;
-            console.log('\ncurrentSong', currentSong);
+            console.log("\ncurrentSong", currentSong);
             while (this._elapsedTime < currentSong.lengthMilliseconds) {
                 // Mock playing a song
                 // TODO: Replace with actually playing the song somehow
