@@ -2,34 +2,42 @@ import { Playlist, Song } from "@play-list/types";
 import { Queue } from "@play-list/api";
 import { program } from "commander";
 import chalk from "chalk";
+import { v4 as uuid } from 'uuid';
 
 const ONE_SECOND_MS = 1000;
 const ONE_MINUTE_MS = ONE_SECOND_MS * 60;
 
 const exampleSong1: Song = {
     _typename: 'song',
+    id: uuid(),
     name: "S1: TestSong",
     artist: "Dunco",
-    lengthMilliseconds: ONE_MINUTE_MS
+    lengthMilliseconds: ONE_MINUTE_MS,
+    year: 2025,
 } as const;
 
 const exampleSong2: Song = {
     _typename: 'song',
+    id: uuid(),
     name: "S2: SongTest",
     artist: "Dunco",
-    lengthMilliseconds: ONE_MINUTE_MS * 2
+    lengthMilliseconds: ONE_MINUTE_MS * 2,
+    year: 2022
 } as const;
 
 const exampleSong3: Song = {
     _typename: 'song',
+    id: uuid(),
     name: "S3: SingSong",
     artist: "Dunco",
-    lengthMilliseconds: ONE_MINUTE_MS * 3
+    lengthMilliseconds: ONE_MINUTE_MS * 3,
+    year: 2023
 } as const;
 
 
 const examplePlaylist: Playlist = {
     _typename: 'playlist',
+    id: uuid(),
     name: "P3: Thirdlist",
     songs: [
         exampleSong1,
@@ -44,14 +52,12 @@ const info = (...args: Parameters<typeof console.log>) => console.info(chalk.yel
 
 const SHUFFLE_COUNT = 3
 
-
 function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 await program.action(async () => {
-    const queue = new Queue();
-    queue.enqueueSong(exampleSong1);
+    const queue = new Queue([exampleSong1]);
     const logQ = () => {
         divider();
         queue.print();

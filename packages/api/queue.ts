@@ -1,39 +1,26 @@
 import { Playlist, type QueueType, type Song } from "@play-list/types";
-
-/* 
- * Randomize array in-place using Durstenfeld shuffle algorithm 
- * Credit: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array  
-*/
-const shuffleArray = <T>(array: Array<T>) => {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-}
+import { deepEqualSong, shuffleArray } from "./utils";
 
 export class Queue {
     private _q: QueueType = [];
     private _currentSong: Song;
     private _repeat = false;
 
+    constructor(q: QueueType) {
+        this._q = q;
+        const first = q?.[0];
+        this._currentSong = first._typename === 'song' ? first : first && first._typename === 'playlist' ? first.songs[0] : first;
+    }
+
     private _flatten(): Array<Song> {
         const flat: Array<Song> = [];
-        for (let i = 0; i < this._q.length; i++) {
-            const current = this._q?.[i];
-            if (!current) {
-                console.error('current was undefined', current);
-                return flat;
-            }
+        this._q.forEach((current) => {
             if (current._typename === 'song') {
                 flat.push(current)
-                continue;
-            }
-            if (current._typename === 'playlist') {
+            } else if (current._typename === 'playlist') {
                 flat.push(...current.songs);
             }
-        }
+        });
         return flat;
     }
 
@@ -49,18 +36,18 @@ export class Queue {
 
     public nextSong() {
         const flattened = this._flatten();
-        // TODO: Switch to some sort of deep equal for songs
-        const currentSongIndex = flattened.findIndex((song) => song === this._currentSong);
+        const currentSongIndex = flattened.findIndex((song) => deepEqualSong(song, this._currentSong));
         const numSongs = flattened.length;
         if (currentSongIndex + 1 >= numSongs - 1) {
+            // We've reached the end of the queue
             if (this._repeat) {
                 this._currentSong = flattened[0];
                 return;
             }
             this._currentSong = flattened[numSongs - 1];
+            return;
         }
         this._currentSong = flattened[currentSongIndex + 1];
-
     }
 
     public get() {
@@ -69,6 +56,10 @@ export class Queue {
 
     public setRepeat(repeat: boolean) {
         this._repeat = repeat;
+    }
+
+    public getRepeat(): boolean {
+        return this._repeat;
     }
 
     public getCurrentSong(): Song {
@@ -111,10 +102,20 @@ export class Queue {
         }
     }
 
-    public deepShuffle() {
-        console.warn("DEEP SHUFFLING CURRENTLY BLITZES OUT ALL PLAYLIST INFORMATION")
+    public flatDeepShuffle() {
         const flattened = this._flatten();
         shuffleArray(flattened);
-        this._q = flattened;
+        this._q = flattened
+    }
+
+    public deepShuffle() {
+        // First, shuffle the songs and playlists
+        shuffleArray(this._q);
+        // Then, shuffle each playlist in the queue
+        this._q.forEach((enqueued) => {
+            if (enqueued._typename === 'playlist') {
+                shuffleArray(enqueued.songs)
+            }
+        })
     }
 }

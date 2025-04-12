@@ -14,6 +14,7 @@
     "@play-list/types": "workspace:*",
     "bun": "^1.2.9",
     "chalk": "^5.4.1",
-    "commander": "^13.1.0"
+    "commander": "^13.1.0",
+    "uuid": "^11.1.0"
   }
 }
