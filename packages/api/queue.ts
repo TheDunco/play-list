@@ -5,6 +5,7 @@ export class Queue {
     private _q: QueueType = [];
     private _currentSong: Song;
     private _repeat = false;
+    private _currentFlatIndex = 0;
 
     constructor(q: QueueType) {
         this._q = q;
@@ -28,26 +29,34 @@ export class Queue {
         return this._flatten().length;
     }
 
+    public isOnLastSong(): boolean {
+        return this._currentFlatIndex === this.countSongs() - 1;
+    }
+
     public print() {
         console.log("Total Songs:", this.countSongs());
         console.log("Current Song:", this._currentSong);
+        console.log("Repeat: ", this._repeat);
         console.log("Q: ", JSON.stringify(this._q, null, 2));
     }
 
     public nextSong() {
         const flattened = this._flatten();
-        const currentSongIndex = flattened.findIndex((song) => deepEqualSong(song, this._currentSong));
+        //console.log('flattened', flattened.reduce((acc, s) => { acc.push(s.name); return acc; }, [] as string[]));
         const numSongs = flattened.length;
-        if (currentSongIndex + 1 >= numSongs - 1) {
+
+        if (this._currentFlatIndex + 1 >= numSongs - 1) {
             // We've reached the end of the queue
             if (this._repeat) {
-                this._currentSong = flattened[0];
-                return;
+                this.toTop();
+            } else {
+                this._currentFlatIndex = numSongs - 1;
+                this._currentSong = flattened[this._currentFlatIndex];
             }
-            this._currentSong = flattened[numSongs - 1];
-            return;
+        } else {
+            this._currentFlatIndex += 1;
+            this._currentSong = flattened[this._currentFlatIndex];
         }
-        this._currentSong = flattened[currentSongIndex + 1];
     }
 
     public get() {
@@ -64,6 +73,12 @@ export class Queue {
 
     public getCurrentSong(): Song {
         return this._currentSong;
+    }
+
+    public toTop() {
+        const flat = this._flatten();
+        this._currentSong = flat?.[0];
+        this._currentFlatIndex = 0;
     }
 
     public enqueueSong(song: Song) {
@@ -89,16 +104,7 @@ export class Queue {
     public shuffle(restart = false) {
         shuffleArray(this._q);
         if (restart) {
-            const first = this._q[0];
-            if (first._typename === 'song') {
-                this._currentSong = first;
-                return;
-            }
-            if (first._typename === 'playlist') {
-                this._currentSong = first.songs[0];
-                return;
-            }
-
+            this.toTop();
         }
     }
 
@@ -117,5 +123,9 @@ export class Queue {
                 shuffleArray(enqueued.songs)
             }
         })
+    }
+
+    public clear() {
+        this._q = [];
     }
 }
