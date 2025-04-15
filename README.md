@@ -12,8 +12,8 @@ I want to be able to do things like
     - [x] keeping enqueued playlist order intact
     - [x] deep shuffling playlists and their position
     - [ ] specify the type of shuffling
-      - [ ] True random
-      - [ ] Psuedo-random 
+      - [ ] true random
+      - [ ] psuedo-random 
   - [ ] saved queues
   - [ ] multiple queues
   - [x] repeating queues
